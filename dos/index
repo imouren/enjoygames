@@ -1,0 +1,1 @@
+ALTER TABLE loowar_rechargelog ADD INDEX idx_blessr (uid, mreceipt);
