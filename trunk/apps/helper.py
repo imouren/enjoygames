@@ -18,8 +18,16 @@ APPLE_URL = 'https://sandbox.itunes.apple.com/verifyReceipt' # for test
 #for platforms check sig
 SECRECT = ''
 
+def have_used(uid, receipt):
+    res = RechargeLog.objects.filter(uid=uid, receipt=receipt)
+    if len(res) > 0:
+        return True
+    else:
+        return False
+
 def new_a_log(uid, type, receipt, ln):
-    log = RechargeLog(uid=uid, type=type, receipt=receipt, ln=ln)
+    mreceipt = hashlib.md5(receipt).hexdigest()
+    log = RechargeLog(uid=uid, type=type, receipt=receipt, mreceipt=mreceipt, ln=ln)
     log.save()
 
 def verify_receipts(receipts):

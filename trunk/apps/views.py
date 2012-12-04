@@ -14,10 +14,12 @@ def index(request):
     uid = request.POST.get('uid',None) or request.GET.get('uid','none')
     ln = request.POST.get('ln', None) or request.GET.get('ln', 'zh-Hans')
 
-    if verify_receipts(receipt):
-        res = 1 #
+    if have_used(uid, receipt):
+        res = -1 # receipt has used
+    elif verify_receipts(receipt):
+        res = 1 # OK
     else:
-        res = 0
+        res = 0 # receipt wrong
     if res == 1:
         new_a_log(uid, type, receipt, ln)
     
