@@ -13,10 +13,16 @@ def index(request):
     receipt = request.POST.get('receipt',None) or request.GET.get('receipt','')
     uid = request.POST.get('uid',None) or request.GET.get('uid','none')
     ln = request.POST.get('ln', None) or request.GET.get('ln', 'zh-Hans')
+    test = request.POST.get('test', None) or request.GET.get('test', '0')
+    
+    if test == '1':
+        is_test = True
+    else:
+        is_test = False
 
     if have_used(uid, receipt):
         res = -1 # receipt has used
-    elif verify_receipts(receipt):
+    elif verify_receipts(receipt, is_test):
         res = 1 # OK
     else:
         res = 0 # receipt wrong
