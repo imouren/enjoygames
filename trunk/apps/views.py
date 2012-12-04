@@ -9,10 +9,10 @@ from apps.cache import *
 
 
 def index(request):
-    type = request.GET.get('type', 'ipad')
-    receipt = request.GET.get('receipt','')
-    uid = request.GET.get('uid','none')
-    ln = request.GET.get('ln', 'zh-Hans')
+    type = request.POST.get('type', None) or request.GET.get('type', 'ipad')
+    receipt = request.POST.get('receipt',None) or request.GET.get('receipt','')
+    uid = request.POST.get('uid',None) or request.GET.get('uid','none')
+    ln = request.POST.get('ln', None) or request.GET.get('ln', 'zh-Hans')
 
     if verify_receipts(receipt):
         res = 1 #
