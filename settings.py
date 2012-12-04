@@ -12,7 +12,7 @@ ADMINS = (
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'enjoygames',
         'USER': 'root',
         'PASSWORD': 'mourenmouren',
@@ -58,7 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     #'django.middleware.csrf.CsrfResponseMiddleware',
-    'amf.django.middleware.AMFMiddleware',
+    #'amf.django.middleware.AMFMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
@@ -73,12 +73,16 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.admin',
-    'django.contrib.flatpages',
+    #'django.contrib.flatpages',
     'apps',
 )
 
-
-CACHE_BACKEND = 'django_pylibmc.memcached://127.0.0.1:11311/?timeout=86400'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
