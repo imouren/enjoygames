@@ -1,0 +1,15 @@
+1，网站地址enjoygames.cn  暂时只有两个简单页面，后续有内容可以在丰富。
+
+2，验证充值成功，直接有苹果给出的验证地址来验证。
+地址：https://buy.itunes.apple.com/verifyReceipt
+
+3，也可以访问我写好的API。地址为：enjoygames.cn/loowar/
+约定参数为：
+type  设备类型，string  例如：ipad
+receipt  用户充值回执
+uid 用户ID，可以根据用户的无限网卡地址生成
+ln 语言
+
+返回值：  JSON格式数据
+{"result": 1}  结果值为：0，回执无效；-1，改回执已经使用过；1，成功。
+
