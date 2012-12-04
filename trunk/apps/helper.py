@@ -12,8 +12,8 @@ from django.utils import simplejson
 from apps.models import *
 from apps.cache import *
 
-#APPLE_URL = 'https://buy.itunes.apple.com/verifyReceipt'
-APPLE_URL = 'https://sandbox.itunes.apple.com/verifyReceipt' # for test
+APPLE_URL = 'https://buy.itunes.apple.com/verifyReceipt'
+APPLE_URL_TEST = 'https://sandbox.itunes.apple.com/verifyReceipt' # for test
 
 #for platforms check sig
 SECRECT = ''
@@ -30,9 +30,13 @@ def new_a_log(uid, type, receipt, ln):
     log = RechargeLog(uid=uid, type=type, receipt=receipt, mreceipt=mreceipt, ln=ln)
     log.save()
 
-def verify_receipts(receipts):
+def verify_receipts(receipts, is_test=False):
+    if is_test:
+        the_url = APPLE_URL_TEST
+    else:
+        the_url = APPLE_URL
     data = simplejson.dumps({"receipt-data" : receipts})
-    req = urllib2.Request(APPLE_URL, data, {'Content-Type': 'application/json'})
+    req = urllib2.Request(the_url, data, {'Content-Type': 'application/json'})
     result = urllib2.urlopen(req).read()
     print result
     res = simplejson.loads(result)
