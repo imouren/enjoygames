@@ -7,6 +7,10 @@ from django.utils import simplejson
 from apps.helper import *
 from apps.cache import *
 
+OPEN = 1
+CLOSE = 0
+STATUS = OPEN
+
 
 def index(request):
     type = request.POST.get('type', None) or request.GET.get('type', 'ipad')
@@ -30,6 +34,13 @@ def index(request):
         new_a_log(uid, type, receipt, ln)
     
     data = {'result':res}
+
+    response = HttpResponse(simplejson.dumps(data))
+    response['Content-type'] = 'application/json'
+    return response
+
+def status(request):
+    data = {'result':STATUS}
 
     response = HttpResponse(simplejson.dumps(data))
     response['Content-type'] = 'application/json'
